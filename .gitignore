@@ -49,3 +49,6 @@ next-env.d.ts
 /linkedin-auto/
 *.pdf
 !/public/**/*.pdf
+
+.vercel
+.env*
