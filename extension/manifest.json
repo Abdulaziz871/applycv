@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Muqaddim — LinkedIn auto-apply",
+  "short_name": "Muqaddim",
+  "version": "1.0.0",
+  "description": "Applies to LinkedIn Easy Apply jobs on a schedule with a CV tailored by your Muqaddim site.",
+  "minimum_chrome_version": "120",
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html", "default_title": "Muqaddim" },
+  "permissions": ["storage", "alarms", "tabs", "scripting"],
+  "host_permissions": ["https://www.linkedin.com/*"],
+  "optional_host_permissions": ["https://*/*", "http://localhost/*", "http://127.0.0.1/*"]
+}

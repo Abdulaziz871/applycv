@@ -1,0 +1,50 @@
+{
+  "name": "muqaddim",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "fixtures": "tsx scripts/make-fixtures.ts",
+    "e2e": "tsx scripts/e2e.ts",
+    "smoke:ai": "tsx scripts/smoke-ai.ts",
+    "e2e:send": "tsx scripts/e2e-send.ts"
+  },
+  "dependencies": {
+    "@google/genai": "^2.23.0",
+    "@sparticuz/chromium": "^147.0.0",
+    "clsx": "^2.1.1",
+    "jose": "^6.2.12",
+    "lucide-react": "^1.47.0",
+    "mammoth": "^1.12.3",
+    "next": "16.3.5",
+    "papaparse": "^5.7.0",
+    "puppeteer-core": "^25.11.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "read-excel-file": "^9.3.10",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/ibm-plex-sans-arabic": "^5.3.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^22.20.4",
+    "@types/papaparse": "^5.5.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "docx": "^9.8.1",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "pdfjs-dist": "^6.3.289",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.13",
+    "typescript": "^5",
+    "vitest": "^5.0.1",
+    "write-excel-file": "^4.1.1"
+  }
+}

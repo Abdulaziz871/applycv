@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* خطوط السيرة الذاتية (نفس الملفات تُضمَّن داخل PDF على الخادم) */
+@font-face { font-family: "CVArabic"; font-weight: 400; font-display: swap; src: url("/fonts/plex-arabic-400.woff2") format("woff2"); }
+@font-face { font-family: "CVArabic"; font-weight: 600; font-display: swap; src: url("/fonts/plex-arabic-600.woff2") format("woff2"); }
+@font-face { font-family: "CVArabic"; font-weight: 700; font-display: swap; src: url("/fonts/plex-arabic-700.woff2") format("woff2"); }
+@font-face { font-family: "CVLatin"; font-weight: 400; font-display: swap; src: url("/fonts/plex-latin-400.woff2") format("woff2"); }
+@font-face { font-family: "CVLatin"; font-weight: 600; font-display: swap; src: url("/fonts/plex-latin-600.woff2") format("woff2"); }
+@font-face { font-family: "CVLatin"; font-weight: 700; font-display: swap; src: url("/fonts/plex-latin-700.woff2") format("woff2"); }
+
+:root {
+  --background: #f6f5f1;
+  --surface: #ffffff;
+  --surface-muted: #efede6;
+  --border: #e2dfd5;
+  --text: #1f2933;
+  --text-muted: #6b7280;
+  --primary: #3f6b6a;
+  --primary-hover: #345a59;
+  --primary-soft: #e3eeec;
+  --accent: #c9a96e;
+  --success: #4f8a6b;
+  --warning: #b98a3b;
+  --danger: #b5533f;
+  --add-bg: #e1efe5;
+  --modify-bg: #f6ead0;
+  --remove-bg: #f3ddd7;
+  --shadow: 0 1px 2px rgb(31 41 51 / 0.04), 0 4px 16px rgb(31 41 51 / 0.05);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-add: var(--add-bg);
+  --color-modify: var(--modify-bg);
+  --color-remove: var(--remove-bg);
+  --font-sans: var(--font-plex-arabic), "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --radius-card: 16px;
+  --radius-control: 12px;
+  --shadow-soft: var(--shadow);
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.8;
+  letter-spacing: 0;
+  font-variant-numeric: lining-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--primary-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-muted) 25%, #f7f6f1 50%, var(--surface-muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; }
+}

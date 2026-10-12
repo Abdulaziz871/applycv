@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+  body { font: 14px/1.6 system-ui, "Segoe UI", Tahoma, sans-serif; width: 340px; margin: 0; padding: 14px; color: #1f2937; }
+  h1 { font-size: 16px; margin: 0 0 10px; }
+  label { display: block; font-weight: 600; margin: 10px 0 4px; }
+  input { width: 100%; box-sizing: border-box; padding: 7px 9px; border: 1px solid #d1d5db; border-radius: 8px; direction: ltr; }
+  button { margin-top: 8px; padding: 7px 12px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; cursor: pointer; }
+  button.primary { background: #0f5132; color: #fff; border-color: #0f5132; }
+  .muted { color: #6b7280; font-size: 12.5px; }
+  .box { background: #f6f5f0; border-radius: 10px; padding: 9px 11px; margin-top: 10px; }
+  ul { padding: 0 16px 0 0; margin: 6px 0 0; max-height: 180px; overflow: auto; }
+  li { margin-bottom: 4px; font-size: 12.5px; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+  <h1>مُقدِّم — تقديم LinkedIn التلقائي</h1>
+  <label for="site">رابط موقع مُقدِّم</label>
+  <input id="site" placeholder="https://your-app.vercel.app">
+  <button id="saveSite">حفظ ومنح الإذن</button>
+  <div class="muted">بعد الحفظ افتح صفحة «LinkedIn» في الموقع (أو حدّثها) واضغط «ربط الإضافة».</div>
+  <div class="box" id="status">…</div>
+  <div class="row">
+    <button id="dry">تشغيل تجريبي (بدون إرسال)</button>
+    <button id="run" class="primary">تشغيل الآن</button>
+  </div>
+  <div class="box"><b>آخر الأحداث</b><ul id="log"></ul></div>
+  <script src="popup.js"></script>
+</body>
+</html>
