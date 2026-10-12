@@ -328,17 +328,35 @@ chrome.runtime.onInstalled.addListener(async () => {
 
 // ---------------- site bridge registration ----------------
 
+const sitePattern = (origin) => {
+  const u = new URL(origin);
+  return `${u.protocol}//${u.hostname}/*`;
+};
+
+async function hasSitePermission(origin) {
+  return !!origin && chrome.permissions.contains({ origins: [sitePattern(origin)] });
+}
+
+/** (Re)registers bridge.js on the site origin and injects it into already-open site tabs. */
 async function registerBridge() {
   const config = await get("config", null);
   await chrome.scripting.unregisterContentScripts({ ids: ["bridge"] }).catch(() => {});
-  if (!config?.siteOrigin) return;
-  const u = new URL(config.siteOrigin);
-  await chrome.scripting
-    .registerContentScripts([
-      { id: "bridge", matches: [`${u.protocol}//${u.hostname}/*`], js: ["bridge.js"], runAt: "document_start" },
-    ])
-    .catch(() => {});
+  if (!config?.siteOrigin || !(await hasSitePermission(config.siteOrigin))) return false;
+  const pattern = sitePattern(config.siteOrigin);
+  try {
+    await chrome.scripting.registerContentScripts([
+      { id: "bridge", matches: [pattern], js: ["bridge.js"], runAt: "document_start" },
+    ]);
+  } catch {
+    return false;
+  }
+  for (const tab of await chrome.tabs.query({ url: pattern })) {
+    await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["bridge.js"] }).catch(() => {});
+  }
+  return true;
 }
+
+chrome.permissions.onAdded.addListener(() => registerBridge());
 
 // ---------------- messages ----------------
 
@@ -349,6 +367,7 @@ async function status() {
   return {
     version: chrome.runtime.getManifest().version,
     siteOrigin: config?.siteOrigin ?? null,
+    sitePermission: await hasSitePermission(config?.siteOrigin),
     configured: !!(config?.settings && config?.cv && config?.token),
     enabled: !!config?.settings?.enabled,
     submitMode: config?.settings?.submitMode ?? "dry",

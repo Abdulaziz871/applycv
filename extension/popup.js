@@ -5,8 +5,10 @@ const STATUS_AR = { submitted: "قُدّم", dry: "تجربة", skipped: "تُخ
 
 async function refresh() {
   const s = await send({ type: "status" });
-  if (s.siteOrigin) $("site").value = s.siteOrigin;
+  if (s.siteOrigin && document.activeElement !== $("site")) $("site").value = s.siteOrigin;
   const lines = [];
+  if (s.siteOrigin && !s.sitePermission) lines.push("⚠️ لم يُمنح الإذن للموقع بعد: اضغط «حفظ ومنح الإذن» ووافق.");
+  if (s.siteOrigin && s.sitePermission) lines.push("🔗 الموقع: " + s.siteOrigin + " (حدّث صفحة الموقع بعد أي تغيير)");
   lines.push(s.configured ? "✅ مربوطة بالموقع" : "⚠️ غير مربوطة بالموقع بعد");
   lines.push(s.enabled ? `الجدولة: مفعّلة (${s.submitMode === "auto" ? "إرسال تلقائي" : "وضع تجربة"})` : "الجدولة: متوقفة");
   lines.push(`اليوم: ${s.todayCount} / ${s.maxPerDay}`);
@@ -31,9 +33,10 @@ $("saveSite").onclick = async () => {
     return;
   }
   const pattern = `${url.protocol}//${url.hostname}/*`;
-  const ok = await chrome.permissions.request({ origins: [pattern] });
-  if (!ok) return;
+  // Save first: Chrome may close this popup while the permission dialog is open.
+  // The background registers the site bridge as soon as the permission is granted.
   await send({ type: "setSite", origin: url.origin });
+  await chrome.permissions.request({ origins: [pattern] });
   refresh();
 };
 $("dry").onclick = async () => { await send({ type: "runNow", dry: true }); refresh(); };

@@ -13,6 +13,8 @@
     try {
       data = await chrome.runtime.sendMessage({ from: "bridge", type: m.type, payload: m.payload });
     } catch (err) {
+      // a stale copy left behind after the extension was reloaded: stay silent so the fresh copy answers
+      if (/context invalidated/i.test(String(err?.message))) return;
       data = { error: String(err?.message || err) };
     }
     window.postMessage({ muq: "ext", id: m.id, data }, location.origin);
